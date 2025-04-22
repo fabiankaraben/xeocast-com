@@ -102,27 +102,27 @@ resource "cloudflare_record" "www_cname_record" {
 #   }
 # }
 
-resource "cloudflare_ruleset" "redirect_www_to_root" {
-  zone_id     = data.cloudflare_zones.domain_zone.zones[0].id
-  name        = "Redirect www to root"
-  description = "Redirect www.${var.custom_domain} to ${var.custom_domain}"
-  kind        = "zone"
-  phase       = "http_request_dynamic_redirect"
+# resource "cloudflare_ruleset" "redirect_www_to_root" {
+#   zone_id     = data.cloudflare_zones.domain_zone.zones[0].id
+#   name        = "Redirect www to root"
+#   description = "Redirect www.${var.custom_domain} to ${var.custom_domain}"
+#   kind        = "zone"
+#   phase       = "http_request_dynamic_redirect"
 
-  rules {
-    action      = "redirect"
-    expression  = "(http.host matches \"^www\\..*\")"
-    description = "Redirect www to root"
+#   rules {
+#     action      = "redirect"
+#     expression  = "(http.host matches \"^www\\..*\")"
+#     description = "Redirect www to root"
 
-    action_parameters {
-      from_value {
-        status_code = 301
-        target_url {
-          value = "https://$1"
-        }
-        preserve_query_string = true
-      }
-    }
-    enabled = true
-  }
-}
+#     action_parameters {
+#       from_value {
+#         status_code = 301
+#         target_url {
+#           value = "https://$1"
+#         }
+#         preserve_query_string = true
+#       }
+#     }
+#     enabled = true
+#   }
+# }
