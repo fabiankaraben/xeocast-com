@@ -1,0 +1,26 @@
+---
+import '../styles/global.css';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+
+interface Props {
+  title?: string;
+}
+
+const { title = "XeoCast - Your Podcast Destination" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-slate-50 dark:bg-gray-900 min-h-screen font-[Inter] transition-colors duration-200">
+    <ThemeSwitcher />
+    <slot />
+  </body>
+</html>

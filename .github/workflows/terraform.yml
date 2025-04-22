@@ -1,0 +1,54 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main # Or your default branch
+    paths:
+      - 'terraform/**'
+      - '.github/workflows/terraform.yml'
+
+jobs:
+  terraform:
+    name: 'Terraform Apply'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # Needed to check out the repository
+      # Add other permissions if needed, e.g., for accessing secrets or deploying
+
+    env:
+      # Pass Cloudflare credentials securely using GitHub secrets
+      TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      # Variables with defaults defined in variables.tf don't necessarily
+      # need to be set here unless you want to override them in the CI/CD context.
+      # TF_VAR_project_name: "xeocast-com" # Example override
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        # with:
+        #   terraform_version: "1.x.x" # Optional: Specify Terraform version
+
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+
+      - name: Terraform Validate
+        working-directory: ./terraform
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: ./terraform
+        run: terraform plan -input=false -no-color
+        # Add '-out=tfplan' and upload artifact if manual approval is desired before apply
+
+      - name: Terraform Apply
+        # This step applies changes automatically. Remove '-auto-approve'
+        # if you want the workflow to pause for manual approval in the Cloudflare dashboard
+        # or if you implement a manual approval step in Actions.
+        working-directory: ./terraform
+        run: terraform apply -auto-approve -input=false -no-color 
