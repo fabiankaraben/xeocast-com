@@ -6,7 +6,13 @@ This directory contains Terraform configuration to provision a Cloudflare Pages 
 
 1.  **Terraform**: Install Terraform CLI (version 1.0 or later).
 2.  **Cloudflare Account**: You need a Cloudflare account.
-3.  **Cloudflare API Token**: Create a Cloudflare API token with the necessary permissions (e.g., `Account Settings:Read`, `Page Projects:Edit`).
+3.  **Cloudflare API Token**: Create a Cloudflare API token with the necessary permissions:
+    *   Account Permissions:
+        *   `Account Settings`: `Read`
+        *   `Pages`: `Edit` (or `Write`)
+    *   Zone Permissions (for the zone containing your custom domain):
+        *   `DNS`: `Edit` (or `Write`)
+        *   `Page Rules`: `Edit` (or `Write`)
 4.  **Cloudflare Account ID**: Find your Cloudflare Account ID in the Cloudflare dashboard.
 
 ## Setup
@@ -41,6 +47,7 @@ Optional variables (with defaults):
 *   `production_branch`: Defaults to `main`.
 *   `github_owner`: Defaults to `fabiankaraben`.
 *   `github_repo_name`: Defaults to `xeocast-com`.
+*   `custom_domain`: Defaults to `xeocast.com`.
 
 You can override these defaults in your `.tfvars` file or via environment variables if needed.
 
@@ -83,3 +90,5 @@ A GitHub Actions workflow is included in `.github/workflows/terraform.yml`. This
 *   `CLOUDFLARE_API_TOKEN`: Your Cloudflare API Token.
 
 Add these as secrets to your GitHub repository settings (`Settings > Secrets and variables > Actions`). 
+
+**Note:** A second `git push` with some website changes is required to throw the deployment in the Cloudflare Pages project.
