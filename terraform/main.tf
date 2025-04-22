@@ -77,14 +77,28 @@ resource "cloudflare_record" "www_cname_record" {
   }
 }
 
-resource "cloudflare_page_rule" "www_redirect" {
-  zone_id = data.cloudflare_zones.domain_zone.zones[0].id
-  target  = "www.*"
-  actions {
-    forwarding_url {
-      url         = "https://$1"
-      status_code = 301 # Permanent Redirect
+resource "cloudflare_ruleset" "redirect_www_to_root" {
+  zone_id     = data.cloudflare_zones.domain_zone.zones[0].id
+  name        = "Redirect www to root"
+  description = "Redirect www.${var.custom_domain} to ${var.custom_domain}"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
+
+  rules {
+    action      = "redirect"
+    expression  = "(http.host eq \"www.${var.custom_domain}\")"
+    description = "Redirect www to root"
+
+    action_parameters {
+      from_value {
+        status_code = 301
+        target_url {
+          expression = "concat(\"https://${var.custom_domain}\", http.request.uri.path)"
+        }
+        preserve_query_string = true
+      }
     }
+    enabled = true
   }
-  priority = 1 # Higher priority means it runs first
 }
+
