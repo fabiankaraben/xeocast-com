@@ -35,18 +35,10 @@ resource "cloudflare_pages_project" "pages_project" {
     build_command   = "npm run build"
     destination_dir = "dist"
   }
+}
 
-  # Optional: Deployment configuration
-  # deployment_configs {
-  #   preview {
-  #     environment_variables = {
-  #       NODE_VERSION = "18"
-  #     }
-  #   }
-  #   production {
-  #     environment_variables = {
-  #       NODE_VERSION = "18"
-  #     }
-  #   }
-  # }
+resource "cloudflare_pages_domain" "custom_domain" {
+  account_id   = var.cloudflare_account_id
+  project_name = cloudflare_pages_project.pages_project.name
+  domain       = var.custom_domain
 } 

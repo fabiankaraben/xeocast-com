@@ -31,4 +31,10 @@ variable "github_repo_name" {
   description = "The name of the GitHub repository."
   type        = string
   default     = "xeocast-com" # Assuming from workspace path
+}
+
+variable "custom_domain" {
+  description = "The custom domain to associate with the Cloudflare Pages project."
+  type        = string
+  default     = "xeocast.com"
 } 
