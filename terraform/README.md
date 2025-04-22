@@ -13,7 +13,7 @@ This directory contains Terraform configuration to provision a Cloudflare Pages 
     *   Zone Permissions (for the zone containing your custom domain):
         *   `DNS`: `Edit`
         *   `Zone`: `Read`
-        *   `Zone Rulesets`: `Edit`
+        *   `Single Redirect`: `Edit`
 4.  **Cloudflare Account ID**: Find your Cloudflare Account ID in the Cloudflare dashboard.
 
 ## Setup
