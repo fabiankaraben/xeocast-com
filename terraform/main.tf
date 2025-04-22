@@ -31,10 +31,10 @@ resource "cloudflare_pages_project" "pages_project" {
   }
 
   # Optional: Build configuration (adjust if needed)
-  # build_config {
-  #   build_command   = "npm run build"
-  #   destination_dir = "dist"
-  # }
+  build_config {
+    build_command   = "npm run build"
+    destination_dir = "dist"
+  }
 
   # Optional: Deployment configuration
   # deployment_configs {
