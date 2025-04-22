@@ -9,10 +9,11 @@ This directory contains Terraform configuration to provision a Cloudflare Pages 
 3.  **Cloudflare API Token**: Create a Cloudflare API token with the necessary permissions:
     *   Account Permissions:
         *   `Account Settings`: `Read`
-        *   `Pages`: `Edit` (or `Write`)
+        *   `Cloudflare Pages`: `Edit`
     *   Zone Permissions (for the zone containing your custom domain):
-        *   `DNS`: `Edit` (or `Write`)
-        *   `Page Rules`: `Edit` (or `Write`)
+        *   `DNS`: `Edit`
+        *   `Zone`: `Read`
+        *   `Zone Rulesets`: `Edit`
 4.  **Cloudflare Account ID**: Find your Cloudflare Account ID in the Cloudflare dashboard.
 
 ## Setup
